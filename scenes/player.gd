@@ -4,7 +4,7 @@ var speed = 1
 const WALK_SPEED = 5.0
 const SPRINT_SPEED = 8.0
 const JUMP_VELOCITY = 4
-const SENSITIVITY = 0.01
+const SENSITIVITY = 0.005
 
 const CHARACTER_FREQ = 2.0
 const CHARACTER_AMP = 0.08
@@ -15,8 +15,8 @@ const FOV_CHANGE = 1.5
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 9.8
-@onready var neck = $neck
-@onready var camera = $neck/Camera3D
+@onready var neck = $Neck
+@onready var camera = $Neck/POV
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
