@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://dreluheucbgj"]
+
+[ext_resource type="Script" path="res://scenes/objects/coin/coin.gd" id="1_cq3nm"]
+[ext_resource type="ArrayMesh" uid="uid://dsf6w1aqrrowh" path="res://assets/objects/coin/coin-mesh.res" id="2_6heuf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_whfqh"]
+albedo_color = Color(0.721569, 0.721569, 0, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_058jf"]
+points = PackedVector3Array(-0.878768, 0.108385, -0.16464, 0.878759, 0.108387, 0.164643, 0.876251, -0.110931, 0.164174, 0.164624, 0.108385, -0.878769, -0.74208, -0.111356, 0.494776, -0.354383, -0.110494, -0.818103, 0.164623, 0.108385, 0.878768, 0.630876, -0.111129, -0.6309, 0.35436, -0.110495, 0.818114, -0.581631, 0.125, 0.581626, -0.766237, -0.125, -0.197753, 0.682843, 0.125, -0.455034, -0.455041, 0.125, -0.682709, -0.272651, -0.110539, 0.845788, 0.581603, 0.125, 0.581626, 0.197581, -0.125, -0.766235, 0.345932, -0.125, 0.716835, -0.742093, -0.111358, -0.494784, 0.845788, -0.110542, -0.272651, -0.3554, 0.10795, 0.82045, 0.680584, -0.110311, 0.571609, -0.820391, 0.107942, 0.355537, -0.876256, -0.110928, 0.164169, -0.573243, 0.107764, -0.682548, 0.791819, 0.107762, -0.409351, 0.164153, -0.110928, -0.876256, 0.573225, 0.107766, 0.682561, -0.164651, 0.108385, -0.878765, 0.409462, 0.107752, -0.791768, 0.790986, -0.125, -0.0246223, -0.469535, -0.125, 0.642659, -0.573251, 0.107766, 0.682558)
+
+[sub_resource type="Animation" id="Animation_7g2q6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -1.60839, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_b0tob"]
+resource_name = "fly"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(3.48787e-16, 3.48787e-16, 3.48787e-16), Vector3(3.48787e-16, 1.5708, 3.48787e-16), Vector3(3.48787e-16, 3.14159, 3.48787e-16)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lr3h6"]
+_data = {
+"RESET": SubResource("Animation_7g2q6"),
+"fly": SubResource("Animation_b0tob")
+}
+
+[node name="Coin" type="Area3D"]
+transform = Transform3D(-0.0375848, 0, -0.999293, 0, 1, 0, 0.999293, 0, -0.0375848, 2.08165e-12, 0.75, 2.08165e-12)
+script = ExtResource("1_cq3nm")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.55, -3.33744e-09, 1.45884e-16, 0, -2.40413e-08, -0.55, 3.33744e-09, 0.55, -2.40413e-08, 0.00113744, 0, -3.64925e-12)
+material_override = SubResource("StandardMaterial3D_whfqh")
+mesh = ExtResource("2_6heuf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.55, -3.33744e-09, 1.45884e-16, 0, -2.40413e-08, -0.55, 3.33744e-09, 0.55, -2.40413e-08, 0.00113744, 0, -3.64925e-12)
+shape = SubResource("ConvexPolygonShape3D_058jf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_lr3h6")
+}
