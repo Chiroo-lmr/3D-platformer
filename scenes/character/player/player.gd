@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+var xform : Transform3D
 var speed = 1
 const WALK_SPEED = 5.0
 const SPRINT_SPEED = 8.0
@@ -47,6 +48,14 @@ func _physics_process(delta):
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("left", "right", "up", "down")
 	var direction = (neck.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	if is_on_floor() and input_dir != Vector2(0, 0) or is_on_floor_only():
+		align_with_floor($RayCast3D.get_collision_normal())
+		global_transform = global_transform.interpolate_with(xform, 0.3)
+	elif not is_on_floor():
+		align_with_floor(Vector3.UP )
+		global_transform = global_transform.interpolate_with(xform, 0.3)
+	
 	if is_on_floor():
 		if direction:
 			velocity.x = direction.x * speed
@@ -74,3 +83,9 @@ func _head_CHARACTER(time) -> Vector3:
 	pos.y = sin(time * CHARACTER_FREQ) * CHARACTER_AMP
 	pos.x = sin(time * CHARACTER_FREQ / 2 ) * CHARACTER_AMP
 	return pos
+
+func align_with_floor(floor_normal):
+	xform = global_transform
+	xform.basis.y = floor_normal
+	xform.basis.x = -xform.basis.z.cross(floor_normal)
+	xform.basis = xform.basis.orthonormalized()
