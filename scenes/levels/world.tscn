@@ -60,7 +60,4 @@ data = {
 }
 metadata/_editor_floor_ = Vector3(-2, 0, 6)
 
-[node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5, -20)
-
 [connection signal="body_entered" from="Coin" to="." method="_on_coin_body_entered"]
